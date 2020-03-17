@@ -1,0 +1,54 @@
+<html>
+
+<head>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+
+    function drawChart() {
+      var queryOptions = {
+        csvColumns: ['number', 'number', 'number' /* Or whatever the columns in the CSV file are */],
+        csvHasHeader: true /* This should be false if your CSV file doesn't have a header */
+      }
+      var query_zoom = new google.visualization.Query('./data_zoom.csv', queryOptions);
+      var query = new google.visualization.Query('./data.csv', queryOptions);
+
+      query_zoom.send(handleQueryResponse("curve_chart_zoom", "Compare Performance(Zoom) [nanos/matrix size]"));
+      query.send(handleQueryResponse("curve_chart", "Compare Performance [nanos/matrix size]"));
+
+      function handleQueryResponse(name, titleText) {
+        return function (response) {
+
+          if (response.isError()) {
+            alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+            return;
+          } else {
+            var data = response.getDataTable();
+
+            var options = {
+              title: titleText,
+              curveType: 'function',
+              legend: { position: 'bottom' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById(name));
+            chart.draw(data, options);
+          }
+        }
+      }
+    }
+
+
+
+
+  </script>
+</head>
+
+<body>
+  <div id="curve_chart_zoom" style="width: 1600px; height: 800px"></div>
+  <div id="curve_chart" style="width: 1600px; height: 800px"></div>
+</body>
+
+</html>
