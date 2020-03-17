@@ -20,4 +20,4 @@ https://www.baeldung.com/hamcrest-custom-matchers
 
 After implemented sequential and parallel version of algorithm, I make some measures, what must show some trends that should reflect the real situation with a small margin of error 
 
-[Performance report](https://htmlpreview.github.io/?https://github.com/skyrylyuk/MatrixMultiplier/blob/master/reports/performancereport.html)
+[Performance report(not available on GitHub, please download and open local)](reports/performancereport.html)
